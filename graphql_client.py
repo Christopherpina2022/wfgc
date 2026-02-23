@@ -21,13 +21,19 @@ class GraphQLClient:
 
         return data.get("data")
 
-    def fetch_tournament_info(client, query, perpage):
+    def fetch_tournament_info(client, query, perpage, tournament_name):
         page = 1
         all_nodes = []
 
         # First request
         try:
-            data = client.execute(query, {"page": page, "perPage": perpage})
+            data = client.execute(
+                query, 
+                {"page": page, 
+                 "perPage": perpage, 
+                 "tournamentName": tournament_name
+                }
+            )
 
             tournaments = data["tournaments"]
             total_pages = tournaments["pageInfo"]["totalPages"]
@@ -37,7 +43,13 @@ class GraphQLClient:
 
             # Remaining pages
             for page in range(2, total_pages + 1):
-                data = client.execute(query, {"page": page, "perPage": perpage})
+                data = client.execute(
+                    query, 
+                    {"page": page, 
+                    "perPage": perpage, 
+                    "tournamentName": tournament_name
+                    }
+                )
                 if not data:
                     return None
                 all_nodes.extend(data["tournaments"]["nodes"])
