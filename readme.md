@@ -14,7 +14,7 @@ overall results first then below will print out the results by game.
 
 ## Execution
 In your virtual environemnt run this:
-`python main.py [Tournament Name] [State Code] [Optional Arguments]`
+`python main.py [Command] [Tournament Name] [State Code] (Optional Arguments)`
 
 ### Commands
 * top8 - gets a list of players that were in the Top 8 standings
