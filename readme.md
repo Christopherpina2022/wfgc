@@ -1,8 +1,11 @@
 # FGC Local Stat Analyzer
 This app is designed to send requests to the Start.gg API to look for attendees of any
-Local Tournament in the US to create two main Queries:
-*  How many times each user has attended the queried tournament
+local tournament in the United States to create two main queries:
+*  How many times a user has attended the queried tournament
 * Every placement a user has gotten up to the Top 8 standings
+
+The CSV file that will recieve the outcoming data will be formatted to first display the
+overall results first then below will print out the results by game.
 
 ## Setup
 1. Go to [This page and follow the instructions](https://developer.start.gg/docs/authentication) to get an API key from the start.gg Developer portal.
