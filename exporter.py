@@ -3,12 +3,12 @@ from pathlib import Path
 class Exporter:
 
     @staticmethod
-    def export_top8(stats, filename="player_stats.csv"):
+    def export_top8(stats, filename="top8.csv"):
         with open(filename, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
 
             # Overall header
-            writer.writerow(["Overall Top8 Stats"])
+            writer.writerow(["Overall Top 8 Stats"])
             writer.writerow([
                 "gamerTag",
                 "Top8 Achieved",
@@ -16,7 +16,13 @@ class Exporter:
             ])
 
             # Overall players
-            for player in stats["overall"]:
+
+            overall_sorted = sorted(
+                stats["overall"],
+                key=lambda p: p["top8"],
+                reverse=True
+            )
+            for player in overall_sorted:
                 placements = player["placements"]
                 writer.writerow([
                     player["gamerTag"],
@@ -33,14 +39,19 @@ class Exporter:
             # Per-game sections
             for game, players in stats["by_game"].items():
                 writer.writerow([])  # blank row
-                writer.writerow([f"{game} Top8 Stats"])
+                writer.writerow([f"{game} Top 8 Stats"])
                 writer.writerow([
                     "gamerTag",
                     "Top8 Achieved",
                     "1st", "2nd", "3rd", "4th", "5th", "7th", "8th"
                 ])
-
-                for player in players:
+                
+                game_sorted = sorted(
+                    stats["by_game"][game],
+                    key=lambda p: p["top8"],
+                    reverse=True
+                )
+                for player in game_sorted:
                     placements = player["placements"]
                     writer.writerow([
                         player["gamerTag"],
