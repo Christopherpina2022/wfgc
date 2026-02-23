@@ -1,7 +1,8 @@
 # WFGC Headcounter
 This app is designed to send requests to the Start.gg API to look for attendees of *Crossover ICT* to create two main Queries:
-* How many times each user has attended a Crossover ICT Tournament
+* TODO: How many times each user has attended a Crossover ICT Tournament
 * Every placement a user has gotten up to the Top 8 standings
+* TODO: filter top 8 standings by game category
 
 ## Setup
 1. Go to [This page and follow the instructions](https://developer.start.gg/docs/authentication) to get an API key from the start.gg Developer portal.

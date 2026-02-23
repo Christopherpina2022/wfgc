@@ -6,23 +6,24 @@ class Result:
     gamerTag: str
     placement: int
 
-def parse_top8(tournaments: list[dict]) -> list[Result]:
-    results = []
+class Parser:
+    def parse_top8(tournaments: list[dict]) -> list[Result]:
+        results = []
 
-    for tournament in tournaments:
-        for event in tournament.get("events") or []:
-            standings = event["standings"]["nodes"]
+        for tournament in tournaments:
+            for event in tournament.get("events") or []:
+                standings = event["standings"]["nodes"]
 
-            for standing in standings:
-                player = standing.get("player")
-                if not player:
-                    continue
+                for standing in standings:
+                    player = standing.get("player")
+                    if not player:
+                        continue
 
-                results.append(
-                    Result(
-                        player_id = player["id"],
-                        gamerTag = player["gamerTag"],
-                        placement = standing["standing"]
-                    )   
-                )
-    return results
+                    results.append(
+                        Result(
+                            player_id = player["id"],
+                            gamerTag = player["gamerTag"],
+                            placement = standing["standing"]
+                        )   
+                    )
+        return results
