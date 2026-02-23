@@ -10,7 +10,6 @@ class top8_Result:
 class headcount_Result:
     gamerTag: str
     game: str
-    tournament_id: int
 
 class Parser:
     @staticmethod
@@ -19,7 +18,7 @@ class Parser:
 
         for tournament in tournaments:
             for event in tournament.get("events") or []:
-                gameName = (event.get("videogame")).get("name")
+                gameName = event.get("videogame").get("name")
                 standings = (event.get("standings") or {}).get("nodes") or []
 
                 for standing in standings:
@@ -41,7 +40,6 @@ class Parser:
         results = []
 
         for tournament in tournaments:
-            tournament_id = tournament.get("name")
             for event in tournament.get("events") or []:
                 gameName = event.get("videogame").get("name")
                 entrants = (event.get("entrants") or {}).get("nodes") or []
@@ -52,7 +50,6 @@ class Parser:
                             headcount_Result(
                                 gamerTag = participant.get("gamerTag"),
                                 game = gameName,
-                                tournament_id = tournament_id
                             )
                         )
         return results

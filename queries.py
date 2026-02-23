@@ -7,9 +7,10 @@ query TournamentTop8($page: Int!) {
       totalPages
     }
     nodes {
-    name
       events {
-        name
+        videogame {
+          name
+        }
         standings(query: {perPage: 8}) {
           nodes {
             player {
@@ -33,7 +34,6 @@ query TournamentHeadCount($page: Int!) {
       totalPages
     }
     nodes {
-      id
       events {
         videogame {
           name

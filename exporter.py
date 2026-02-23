@@ -7,41 +7,54 @@ class Exporter:
         with open(filename, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
 
-            # Header
+            # Overall header
+            writer.writerow(["Overall Top8 Stats"])
             writer.writerow([
                 "gamerTag",
-                "top8's Achieved",
-                "1st",
-                "2nd",
-                "3rd",
-                "4th",
-                "5th",
-                "7th",
-                "8th"
+                "Top8 Achieved",
+                "1st", "2nd", "3rd", "4th", "5th", "7th", "8th"
             ])
 
-            sorted_players = sorted(
-                stats.items(),
-                key=lambda item: item[1]["top8"],
-                reverse=True
-            )
-
-            for player_id, data in sorted_players:
-                placements = data["placements"]
-
+            # Overall players
+            for player in stats["overall"]:
+                placements = player["placements"]
                 writer.writerow([
-                    data["gamerTag"],
-                    data["top8"],
+                    player["gamerTag"],
+                    player["top8"],
                     placements.get(1, 0),
                     placements.get(2, 0),
                     placements.get(3, 0),
                     placements.get(4, 0),
                     placements.get(5, 0),
                     placements.get(7, 0),
-                    placements.get(8, 0),
+                    placements.get(8, 0)
                 ])
 
-        print("CSV exported successfully.")
+            # Per-game sections
+            for game, players in stats["by_game"].items():
+                writer.writerow([])  # blank row
+                writer.writerow([f"{game} Top8 Stats"])
+                writer.writerow([
+                    "gamerTag",
+                    "Top8 Achieved",
+                    "1st", "2nd", "3rd", "4th", "5th", "7th", "8th"
+                ])
+
+                for player in players:
+                    placements = player["placements"]
+                    writer.writerow([
+                        player["gamerTag"],
+                        player["top8"],
+                        placements.get(1, 0),
+                        placements.get(2, 0),
+                        placements.get(3, 0),
+                        placements.get(4, 0),
+                        placements.get(5, 0),
+                        placements.get(7, 0),
+                        placements.get(8, 0)
+                    ])
+
+        print(f"CSV exported successfully to {filename}")
     
     @staticmethod
     def export_headcount(stats, filename="headcount.csv"):
