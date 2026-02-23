@@ -7,7 +7,6 @@ def export_top8_stats(stats, filename="player_stats.csv"):
 
         # Header
         writer.writerow([
-            "player_id",
             "gamerTag",
             "top8's Achieved",
             "1st",
@@ -19,11 +18,16 @@ def export_top8_stats(stats, filename="player_stats.csv"):
             "8th"
         ])
 
-        for player_id, data in stats.items():
+        sorted_players = sorted(
+            stats.items(),
+            key=lambda item: item[1]["top8"],
+            reverse=True
+        )
+
+        for player_id, data in sorted_players:
             placements = data["placements"]
 
             writer.writerow([
-                player_id,
                 data["gamerTag"],
                 data["top8"],
                 placements.get(1, 0),
