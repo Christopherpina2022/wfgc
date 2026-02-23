@@ -21,7 +21,7 @@ class GraphQLClient:
 
         return data.get("data")
 
-    def fetch_tournament_info(client, query, perpage, tournament_name):
+    def fetch_tournament_info(client, query, perpage, tournament_name, state_code):
         page = 1
         all_nodes = []
 
@@ -31,7 +31,8 @@ class GraphQLClient:
                 query, 
                 {"page": page, 
                  "perPage": perpage, 
-                 "tournamentName": tournament_name
+                 "tournamentName": tournament_name,
+                 "stateCode" : state_code
                 }
             )
 
@@ -47,7 +48,8 @@ class GraphQLClient:
                     query, 
                     {"page": page, 
                     "perPage": perpage, 
-                    "tournamentName": tournament_name
+                    "tournamentName": tournament_name,
+                    "stateCode" : state_code
                     }
                 )
                 if not data:

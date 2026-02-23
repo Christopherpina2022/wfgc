@@ -27,10 +27,11 @@ def cli():
 @cli.command()
 @click.option("--perpage", default = 25, help = "Number of tournaments to request at a time. [Defaults to 25]")
 @click.argument("tournament_name")
-def top8(perpage, tournament_name):
+@click.argument("state_code")
+def top8(perpage, tournament_name, state_code):
     print("Running Top 8 Analytics...")
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
-    top8_nodes = client.fetch_tournament_info(TOP_8, perpage, tournament_name)
+    top8_nodes = client.fetch_tournament_info(TOP_8, perpage, tournament_name, state_code)
 
     # Stop running if the query Failed
     if not top8_nodes:
@@ -44,10 +45,11 @@ def top8(perpage, tournament_name):
 @cli.command()
 @click.option("--perpage", default = 25, help="Number of tournaments to request at a time.")
 @click.argument("tournament_name")
-def headcount(perpage, tournament_name):
+@click.argument("state_code")
+def headcount(perpage, tournament_name, state_code):
     print("Running Headcount Analytics...")
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
-    headcount_nodes = client.fetch_tournament_info(HEADCOUNT, perpage, tournament_name)
+    headcount_nodes = client.fetch_tournament_info(HEADCOUNT, perpage, tournament_name, state_code)
 
     # Stop running if the query Failed
     if not headcount_nodes:
