@@ -10,8 +10,11 @@ This app is designed to send requests to the Start.gg API to look for attendees 
 2. setup Python Environment (python -m venv venv -> ./venv/scripts/activate) then run the requirements.txt to get dependencies. Python version used was *Python 3.13.11*.
 
 ## Execution
-In your Venv, run:
-`python main.py`
+In your virtual environemnt run this:
+`python main.py [COMMAND]`
+
+The only available command right now is top8, but you can run --help to see all commands
+
 
 ## Handing API restrictions
 The Start.gg API has two main restrictions:
