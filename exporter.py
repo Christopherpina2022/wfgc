@@ -96,3 +96,19 @@ class Exporter:
                     writer.writerow([player["gamerTag"], player["attendance"]])
 
                 writer.writerow([])
+    
+    @staticmethod 
+    def export_attendees(stats: dict, filename="attendees.csv"):
+        with open(filename, "w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+
+            for game, players in stats.items():
+                # Write headers
+                writer.writerow([f"Game: {game}"])
+                writer.writerow(["gamerTag", "Pronouns", "Birthday"])
+
+                # Write player row
+                for player in players:
+                    writer.writerow([player["gamerTag"], player["pronouns"], player["birthday"]])
+
+                writer.writerow([])

@@ -74,3 +74,16 @@ class Analytics:
             "overall": list(temp["overall"].values())
         }
         return stats
+    
+    @staticmethod
+    def compute_attendees(results):
+        by_game = defaultdict(list)
+
+        for result in results:
+            game = result.game or "Unknown"
+            by_game[game].append({
+                "gamerTag": result.gamerTag,
+                "pronouns": result.pronouns,
+                "birthday": result.birthday,
+            })
+        return dict(by_game)

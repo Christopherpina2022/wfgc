@@ -73,6 +73,9 @@ def getattendees(tournament_name, state_code):
         print("use the above error to determine if the perpage parameter is too high (see --help)")
         return None
     attendee_results = Parser.parse_attendees(attendee_nodes)
+    attendee_stats = Analytics.compute_attendees(attendee_results)
+    Exporter.export_attendees(attendee_stats)
+    print("Headcount data has been exported.")
 
 if __name__ == "__main__":
     cli()

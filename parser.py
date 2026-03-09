@@ -82,6 +82,5 @@ class Parser:
                                 game = gameName
                             )
                         )
-        print(results)
         return results
                 
