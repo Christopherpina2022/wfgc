@@ -5,7 +5,7 @@ import csv
 from pathlib import Path
 
 from graphql_client import GraphQLClient
-from queries import TOP_8, HEADCOUNT
+from queries import TOP_8, HEADCOUNT, USERINFO
 from parser import Parser
 from analytics import Analytics
 from exporter import Exporter
@@ -33,7 +33,7 @@ def top8(perpage, tournament_name, state_code):
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
     top8_nodes = client.fetch_tournament_info(TOP_8, perpage, tournament_name, state_code)
 
-    # Stop running if the query Failed
+    # Stop running if the query failed
     if not top8_nodes:
         print("use the above error to determine if the perpage parameter is too high (see --help)")
         return None
@@ -51,7 +51,7 @@ def headcount(perpage, tournament_name, state_code):
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
     headcount_nodes = client.fetch_tournament_info(HEADCOUNT, perpage, tournament_name, state_code)
 
-    # Stop running if the query Failed
+    # Stop running if the query failed
     if not headcount_nodes:
         print("use the above error to determine if the perpage parameter is too high (see --help)")
         return None
@@ -59,6 +59,20 @@ def headcount(perpage, tournament_name, state_code):
     headcount_stats = Analytics.compute_headcount(headcount_results)
     Exporter.export_headcount(headcount_stats)
     print("Headcount data has been exported.")
+
+@cli.command()
+@click.argument("tournament_name")
+@click.argument("state_code")
+def getattendees(tournament_name, state_code):
+    print("Getting attendees for " + tournament_name + "...")
+    client = GraphQLClient(ENDPOINT_URL, API_KEY)
+    attendee_nodes = client.fetch_tournament_info(USERINFO, 1, tournament_name, state_code, True) 
+
+    # Stop running if the query failed
+    if not attendee_nodes:
+        print("use the above error to determine if the perpage parameter is too high (see --help)")
+        return None
+    attendee_results = Parser.parse_attendees(attendee_nodes)
 
 if __name__ == "__main__":
     cli()

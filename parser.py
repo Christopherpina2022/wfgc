@@ -11,6 +11,13 @@ class headcount_Result:
     gamerTag: str
     game: str
 
+@dataclass
+class attendees_Result:
+    gamerTag: str
+    pronouns: str
+    birthday: str
+    game: str
+
 class Parser:
     @staticmethod
     def parse_top8(tournaments: list[dict]) -> list[top8_Result]:
@@ -52,5 +59,29 @@ class Parser:
                                 game = gameName,
                             )
                         )
+        return results
+    
+    @staticmethod
+    def parse_attendees(tournaments: list[dict]) -> list[attendees_Result]:
+        results = []
+
+        for tournament in tournaments:
+            for event in tournament.get("events") or []:
+                gameName = event.get("videogame").get("name")
+                entrants = (event.get("entrants") or {}).get("nodes") or []
+
+                for entrant in entrants:
+                    for participant in entrant["participants"]:
+                        player = participant.get("player") or {}
+                        user = player.get("user") or {}
+                        results.append(
+                            attendees_Result(
+                                gamerTag = participant.get("gamerTag"),
+                                pronouns = user.get("genderPronoun"),
+                                birthday =  user.get("birthday"),
+                                game = gameName
+                            )
+                        )
+        print(results)
         return results
                 
